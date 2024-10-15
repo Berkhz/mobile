@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class FormularioConta extends StatefulWidget {
+class FormularioBancario extends StatefulWidget {
   @override
   _FormularioContaState createState() => _FormularioContaState();
 }
@@ -29,7 +29,6 @@ class _FormularioContaState extends State<FormularioConta> {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                // Aqui você enviaria os dados para a API
               },
               child: Text('Cadastrar'),
             ),
