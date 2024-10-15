@@ -1,3 +1,14 @@
 {
-  "contas": []
+  "contas": [
+    {
+      "id": 1,
+      "nome": "Conta Corrente",
+      "saldo": 1500.00
+    },
+    {
+      "id": 2,
+      "nome": "Conta Poupança",
+      "saldo": 2500.50
+    }
+  ]
 }

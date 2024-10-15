@@ -1,3 +1,5 @@
+import 'package:banco/Forms/FormularioConta.dart';
+import 'package:banco/Services/ContaBancariaService.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -10,12 +12,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Aplicação Bancária',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Cadastro de Contas Bancárias'),
     );
   }
 }
@@ -29,11 +31,17 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  final ContaBancariaService contaService = ContaBancariaService('http://localhost:3000/contas');
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
+  void _cadastrarConta(String nome, double saldo) {
+    contaService.criar(nome, saldo).then((_) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Conta "$nome" cadastrada com sucesso!')),
+      );
+    }).catchError((error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Erro ao cadastrar conta: $error')),
+      );
     });
   }
 
@@ -44,25 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), 
+      body: FormularioConta(onSubmit: _cadastrarConta), 
     );
   }
 }

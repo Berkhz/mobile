@@ -1,8 +1,9 @@
-import 'package:banco/Forms/FormularioConta.dart';
 import 'package:flutter/material.dart';
 
-class FormularioBancario extends StatefulWidget {
-  const FormularioBancario({super.key});
+class FormularioConta extends StatefulWidget {
+  final Function(String, double) onSubmit;
+
+  FormularioConta({super.key, required this.onSubmit});
 
   @override
   _FormularioContaState createState() => _FormularioContaState();
@@ -11,6 +12,19 @@ class FormularioBancario extends StatefulWidget {
 class _FormularioContaState extends State<FormularioConta> {
   final _nomeController = TextEditingController();
   final _saldoController = TextEditingController();
+
+  void _submitForm() {
+    final String nome = _nomeController.text;
+    final double saldo = double.tryParse(_saldoController.text) ?? 0.0;
+
+    if (nome.isEmpty || saldo <= 0) {
+      return;
+    }
+
+    widget.onSubmit(nome, saldo); 
+    _nomeController.clear();
+    _saldoController.clear();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,8 +45,7 @@ class _FormularioContaState extends State<FormularioConta> {
             ),
             const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {
-              },
+              onPressed: _submitForm,
               child: const Text('Cadastrar'),
             ),
           ],

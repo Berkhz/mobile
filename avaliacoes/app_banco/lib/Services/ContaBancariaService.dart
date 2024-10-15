@@ -1,6 +1,12 @@
-import 'IService/IContaBancariaService.dart';
+import 'package:banco/Services/IService/IContaBancariaService.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class ContaBancariaService extends IContaBancariaService {
+  static const String baseUrl = 'http://localhost:3000/contas';
+
+  ContaBancariaService(String s); // Defina sua URL aqui
+
   @override
   Future<List<Map<String, dynamic>>> listar() async {
     final response = await http.get(Uri.parse(baseUrl));
